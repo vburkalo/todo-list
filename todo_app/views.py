@@ -47,7 +47,7 @@ class TaskToggleDoneView(RedirectView):
         task = Task.objects.get(pk=kwargs["task_id"])
         task.done = not task.done
         task.save()
-        return super().get_redirect_url(*args, **kwargs)
+        return super().get_redirect_url()
 
 
 class TagListView(ListView):
