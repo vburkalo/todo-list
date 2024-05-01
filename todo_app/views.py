@@ -6,6 +6,8 @@ from django.views.generic import (
     RedirectView,
 )
 from django.urls import reverse_lazy
+
+from todo_app.forms import TaskForm, TagForm
 from todo_app.models import Task, Tag
 
 
@@ -18,14 +20,14 @@ class HomeView(ListView):
 
 class TaskCreateView(CreateView):
     model = Task
-    fields = ["content", "datetime", "deadline", "done", "tags"]
+    form_class = TaskForm
     template_name = "todo_list/task_form.html"
     success_url = reverse_lazy("todo_list:home")
 
 
 class TaskUpdateView(UpdateView):
     model = Task
-    fields = ["content", "datetime", "deadline", "done", "tags"]
+    form_class = TaskForm
     template_name = "todo_list/task_form.html"
     pk_url_kwarg = "task_id"
     success_url = reverse_lazy("todo_list:home")
@@ -56,14 +58,14 @@ class TagListView(ListView):
 
 class TagCreateView(CreateView):
     model = Tag
-    fields = ["name"]
+    form_class = TagForm
     template_name = "todo_list/tag_form.html"
     success_url = reverse_lazy("todo_list:tag_list")
 
 
 class TagUpdateView(UpdateView):
     model = Tag
-    fields = ["name"]
+    form_class = TagForm
     template_name = "todo_list/tag_form.html"
     pk_url_kwarg = "tag_id"
     success_url = reverse_lazy("todo_list:tag_list")
