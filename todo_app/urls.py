@@ -21,7 +21,7 @@ urlpatterns = [
     path(
         "task/toggle/<int:task_id>/",
         TaskToggleDoneView.as_view(),
-        name="task_toggle-done",
+        name="task-toggle-done",
     ),
     path("tags/", TagListView.as_view(), name="tag-list"),
     path("tag/create/", TagCreateView.as_view(), name="tag-create"),
