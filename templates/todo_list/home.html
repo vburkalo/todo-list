@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>TODO list</h1>
+        <a href="{% url 'todo_list:task-create' %}" class="btn btn-primary font-weight-bold">Add Task</a>
+    </div>
+    <table class="table">
+        <style>
+            .table > tbody > tr > td {
+                border-top: none;
+            }
+            .deadline-class {
+               color: darkred;
+            }
+        </style>
+        <tbody>
+            {% for task in tasks %}
+            <tr>
+                <td>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="task-content">
+                            <strong>{{ task.content }}</strong>
+                            <strong class="{{ task.done|yesno:'text-success,text-danger' }}">{{ task.done|yesno:'Done,Not Done' }}</strong>
+                        </div>
+                        <div class="task-actions">
+                            {% if task.done %}
+                                <a href="{% url 'todo_list:task-toggle-done' task.id %}" class="btn btn-secondary btn-sm font-weight-bold">Undo</a>
+                            {% else %}
+                                <form method="post" action="{% url 'todo_list:task-toggle-done' task.id %}">
+                                    {% csrf_token %}
+                                    {{ form|crispy }}
+                                    <button type="submit" class="btn btn-success btn-sm font-weight-bold">Complete</button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="date-info">
+                    <span>Created: {{ task.datetime|date:"F d, Y, P" }}</span>
+                    {% if task.deadline %}
+                        <span class="deadline-class">Deadline: {{ task.deadline|date:"F d, Y, P" }}</span>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td class="text-secondary">
+                    Tags:
+                    {% for tag in task.tags.all %}
+                        <span>{{ tag.name }}</span>
+                    {% endfor %}
+                    <a href="{% url 'todo_list:task-update' task.id %}" class="btn btn-link">Update</a>
+                    <a href="{% url 'todo_list:task-delete' task.id %}" class="btn btn-link">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td>No tasks found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
