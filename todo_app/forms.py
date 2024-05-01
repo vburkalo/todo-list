@@ -10,6 +10,7 @@ class TaskForm(forms.ModelForm):
             "deadline": forms.DateTimeInput(
                 attrs={"type": "datetime-local"}, format="%Y-%m-%dT%H:%M"
             ),
+            "tags": forms.CheckboxSelectMultiple(),
         }
 
     def __init__(self, *args, **kwargs):
