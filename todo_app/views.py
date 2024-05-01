@@ -60,7 +60,7 @@ class TagCreateView(CreateView):
     model = Tag
     form_class = TagForm
     template_name = "todo_list/tag_form.html"
-    success_url = reverse_lazy("todo_list:tag_list")
+    success_url = reverse_lazy("todo_list:tag-list")
 
 
 class TagUpdateView(UpdateView):
@@ -68,11 +68,11 @@ class TagUpdateView(UpdateView):
     form_class = TagForm
     template_name = "todo_list/tag_form.html"
     pk_url_kwarg = "tag_id"
-    success_url = reverse_lazy("todo_list:tag_list")
+    success_url = reverse_lazy("todo_list:tag-list")
 
 
 class TagDeleteView(DeleteView):
     model = Tag
     template_name = "todo_list/tag_confirm_delete.html"
     pk_url_kwarg = "tag_id"
-    success_url = reverse_lazy("todo_list:tag_list")
+    success_url = reverse_lazy("todo_list:tag-list")
