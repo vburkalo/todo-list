@@ -15,7 +15,7 @@ class HomeView(ListView):
     model = Task
     template_name = "todo_list/home.html"
     context_object_name = "tasks"
-    ordering = ["-done", "-datetime"]
+    ordering = ["content"]
 
 
 class TaskCreateView(CreateView):
